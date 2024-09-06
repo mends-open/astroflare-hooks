@@ -7,11 +7,5 @@ import cloudflare from "@astrojs/cloudflare";
 export default defineConfig({
   integrations: [tailwind(), alpinejs()],
   output: "server",
-  adapter: cloudflare({
-    routes: {
-      extend: {
-        include: [{ pattern: '/functions' }],
-      }
-    },
-  }),
+  adapter: cloudflare()
 });
