@@ -1,0 +1,4 @@
+[[d1_databases]]
+binding = "DB" # The binding name for use in your workers
+database_name = "astroflare_hooks_db" # Your D1 database name
+database_id = "922a1f05-152f-4eda-b62d-25396ed2fb5a" # Will be populated after creating the database
