@@ -1,0 +1,44 @@
+---
+
+// Define a type for the hooks data
+interface Hook {
+  id: number;
+  forwarding_url: string;
+  created_at: string;
+}
+
+// Fetch hooks from the D1 database
+const DB = import.meta.env.DB; // Access the D1 binding
+
+const fetchHooks = async (): Promise<Hook[]> => {
+  const result = await DB.prepare(`SELECT id, forwarding_url, created_at FROM hooks`).all();
+  return result.results as Hook[];
+};
+
+const hooks = await fetchHooks();
+---
+
+<!-- Page UI layout with PenguinUI Table and Tailwind classes -->
+<div class="container mx-auto px-4 py-6">
+  <h1 class="text-3xl font-semibold mb-4">Hooks Overview</h1>
+
+  <!-- PenguinUI Table -->
+  <div class="table w-full bg-white shadow-md rounded-lg">
+    <div class="table-header-group">
+      <div class="table-row">
+        <div class="table-cell px-4 py-2 text-left font-bold text-gray-700">ID</div>
+        <div class="table-cell px-4 py-2 text-left font-bold text-gray-700">Forwarding URL</div>
+        <div class="table-cell px-4 py-2 text-left font-bold text-gray-700">Created At</div>
+      </div>
+    </div>
+    <div class="table-row-group">
+      {hooks.map((hook: Hook) => (
+        <div class="table-row border-t">
+          <div class="table-cell px-4 py-2">{hook.id}</div>
+          <div class="table-cell px-4 py-2">{hook.forwarding_url}</div>
+          <div class="table-cell px-4 py-2">{new Date(hook.created_at).toLocaleString()}</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</div>
